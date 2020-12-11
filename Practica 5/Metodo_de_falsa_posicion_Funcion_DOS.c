@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+double f(double);
+int main()
+{
+    int imax,iter;
+    double xi,xd,ea,em,test,xa,xaold;
+    double f(xi),f(xa);
+    printf("\nMETODO DE FALSA POSICION\n\n");
+
+    printf("Introduce el valor A del intervalo\n");
+    scanf("%lf",&xi);
+    printf("Introduce el valor B del intervalo\n");
+    scanf("%lf",&xd);
+    printf("Introduce el numero de iteraciones maximas\n");
+    scanf("%d",&imax);
+    printf("Introduce el error minimo del calculo\n");
+    scanf("%lf",&em);
+iter=0;
+xa=0;
+
+if(f(xi)*f(xd)>0)
+    printf("No hay raiz en ese intervalo\n");
+else{
+  printf("\nI       A           B             xi           f(a)           f(b)        Error aprox\n");
+  do{
+    iter++;
+    xaold=xa;
+    xa=xd-(f(xd)*(xi-xd))/(f(xi)-f(xd));
+    ea=fabs((xa-xaold)/xa)*100;
+    test=f(xi)*f(xa);
+    if(test<0)
+        xd=xa;
+    else if(test >0)
+        xi=xa;
+    else
+        ea=0;
+
+    printf("\n%d    %lf    %lf       %lf      %lf      %lf        %lf  ",iter,xi,xd,xa,f(xi),f(xd),ea);
+  } while(ea>em && iter<imax);
+}
+    return 0;
+}
+double f(double x)
+{
+    return log(x) + pow(x,2) - 4;
+}
